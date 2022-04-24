@@ -1,20 +1,19 @@
 package GameLogic;
 
 import GUI.ChessPanel;
-import GameLogic.Pieces.Piece;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 public class InputListener implements MouseListener {
-    private ChessPanel chessPanel;
+    private final ChessPanel CHESS_PANEL;
 
-    private ChessBoard chessBoard;
+    private final ChessBoard CHESS_BOARD;
 
     public InputListener(ChessPanel chessPanel){
-        this.chessPanel = chessPanel;
+        this.CHESS_PANEL = chessPanel;
 
-        this.chessBoard = chessPanel.getChessBoard();
+        this.CHESS_BOARD = chessPanel.getCHESS_BOARD();
     }
 
     @Override
@@ -28,8 +27,8 @@ public class InputListener implements MouseListener {
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        chessBoard.handleClick(chessPanel.getBoardPosition(e.getX(), e.getY()));
-        chessPanel.repaint();
+        CHESS_BOARD.handleClick(CHESS_PANEL.getBoardPosition(e.getX(), e.getY()));
+        CHESS_PANEL.repaint();
     }
 
     @Override

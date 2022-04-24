@@ -4,13 +4,13 @@ import javax.swing.*;
 import java.awt.*;
 
 public class MainWindow extends JFrame {
-    private ChessPanel chessBoard;
+    private final ChessPanel CHESS_BOARD;
 
     public MainWindow() {
         super("Chess");
 
-        chessBoard = new ChessPanel();
-        add(chessBoard);
+        CHESS_BOARD = new ChessPanel();
+        add(CHESS_BOARD);
 
         setMinimumSize(new Dimension(300, 300));
 
