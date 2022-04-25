@@ -23,6 +23,8 @@ public class ChessPanel extends JPanel {
     private int xOffset = 0;
     private int yOffset = 0;
 
+    private Position dragPosition;
+
     private final InputListener INPUT_LISTENER;
 
     public ChessPanel() {
@@ -33,6 +35,8 @@ public class ChessPanel extends JPanel {
         INPUT_LISTENER = new InputListener(this);
 
         addMouseListener(INPUT_LISTENER);
+
+        addMouseMotionListener(INPUT_LISTENER);
     }
 
 
@@ -55,6 +59,8 @@ public class ChessPanel extends JPanel {
 
         drawSelectedPieceAndMoves(graphics2D);
 
+        moveSelected(graphics2D);
+
         g.dispose();
     }
 
@@ -68,6 +74,13 @@ public class ChessPanel extends JPanel {
         yOffset = getHeight() / 2 - chessBoardSize / 2;
     }
 
+
+    private void moveSelected(Graphics2D g) {
+        if(dragPosition != null){
+            drawCase(getCHESS_BOARD().getSelectedPiece().getCurrentPosition(), g);
+            drawPiece(g, getCHESS_BOARD().getSelectedPiece(), dragPosition);
+        }
+    }
 
     private void drawBackground(Graphics2D g) {
         g.setColor(BACKGROUND_COLOR);
@@ -85,6 +98,15 @@ public class ChessPanel extends JPanel {
 
     private void drawCase(Position position, Graphics2D g) {
         drawCase(position, (position.getX() + position.getY()) % 2 == 0 ? CHESS_COLOR_2 : CHESS_COLOR_1, g);
+    }
+
+    private void drawCase(Position position, Color color, Graphics2D g) {
+        g.setColor(color);
+
+        int x = xOffset + position.getX() * caseSize;
+        int y = yOffset + position.getY() * caseSize;
+
+        g.fillRect(x, y, caseSize, caseSize);
     }
 
     private void drawPieces(Graphics2D g) {
@@ -107,16 +129,15 @@ public class ChessPanel extends JPanel {
         int drawX = xOffset + piece.getCurrentPosition().getX() * caseSize;
         int drawY = yOffset + piece.getCurrentPosition().getY() * caseSize;
 
-        g.drawImage(piece.getSprite(), drawX, drawY, caseSize, caseSize, this);
+        drawPiece(g, piece, new Position(drawX, drawY));
     }
 
-    private void drawCase(Position position, Color color, Graphics2D g) {
-        g.setColor(color);
+    private void drawPiece(Graphics2D g, Piece piece, Position position) {
+        if(piece == null) {
+            return;
+        }
 
-        int x = xOffset + position.getX() * caseSize;
-        int y = yOffset + position.getY() * caseSize;
-
-        g.fillRect(x, y, caseSize, caseSize);
+        g.drawImage(piece.getSprite(), position.getX(), position.getY(), caseSize, caseSize, this);
     }
 
     private void drawSelectedPieceAndMoves(Graphics2D g) {
@@ -164,6 +185,13 @@ public class ChessPanel extends JPanel {
         g.drawOval(x, y, diameter, diameter);
     }
 
+    public void resetDragPosition() {
+        dragPosition = null;
+    }
+
+    public void setDragPosition(Position dragPosition) {
+        this.dragPosition = new Position(dragPosition.getX() - caseSize / 2, dragPosition.getY() - caseSize / 2);
+    }
 
     public Position getBoardPosition(int x, int y) {
         return new Position((x - xOffset) / caseSize, (y - yOffset) / caseSize);

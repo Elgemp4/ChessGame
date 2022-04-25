@@ -55,7 +55,8 @@ public class ChessBoard {
         }
     }
 
-    public void handleClick(Position clickedPosition) {
+
+    public void handleClick(Position clickedPosition, boolean canSelect) {
         Piece pieceWhereClicked = getPieceAtPosition(clickedPosition);
         Piece selectedPiece = getSelectedPiece();
 
@@ -69,23 +70,10 @@ public class ChessBoard {
             }
         }
 
-        setSelectedPiece(pieceWhereClicked);
+        if(canSelect){
+            setSelectedPiece(pieceWhereClicked);
+        }
 
-
-//        if(selectedPiece == null) {
-//            setSelectedPiece(pieceWhereClicked);
-//        }
-//        else {
-//            if(selectedPiece.isAValidMove(clickedPosition)){
-//                if(pieceWhereClicked == null || pieceWhereClicked.getPieceTeam() != selectedPiece.getPieceTeam()){
-//                    movePiece(selectedPiece, clickedPosition);
-//                    computeMoves();
-//                }
-//            }
-//            else{
-//                setSelectedPiece(pieceWhereClicked);
-//            }
-//        }
     }
 
     public void computeMoves() {
