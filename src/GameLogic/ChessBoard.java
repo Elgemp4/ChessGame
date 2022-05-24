@@ -57,12 +57,15 @@ public class ChessBoard {
 
 
     public void handleClick(Position clickedPosition, boolean canSelect) {
+        if(!isInGrid(clickedPosition)){
+            return;
+        }
         Piece pieceWhereClicked = getPieceAtPosition(clickedPosition);
         Piece selectedPiece = getSelectedPiece();
 
-        if(selectedPiece != null) {
+        if(isInSelectionMode()) {
             if(selectedPiece.isAValidMove(clickedPosition)){
-                if(pieceWhereClicked == null || pieceWhereClicked.getPieceTeam() != selectedPiece.getPieceTeam()){
+                if(isEmpty(pieceWhereClicked)){
                     movePiece(selectedPiece, clickedPosition);
                     computeMoves();
                     return;
@@ -139,6 +142,18 @@ public class ChessBoard {
     public boolean isInGrid(Position position) {
 
         return !(position.getX() < 0 || position.getX() > 7 || position.getY() < 0 || position.getY() > 7);
+    }
+
+    public boolean isInSelectionMode() {
+        return selectedPiece != null;
+    }
+
+    public boolean isEmpty(Position position) {
+        return chessBoard[position.getY()][position.getX()] == null;
+    }
+
+    public boolean isEmpty(Piece piece) {
+        return piece == null;
     }
 
     public Piece getSelectedPiece() {

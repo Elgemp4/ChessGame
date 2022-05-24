@@ -1,20 +1,23 @@
 package GameLogic;
 
 import GUI.ChessPanel;
+import GUI.MainWindow;
 
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
+import java.awt.event.*;
 
-public class InputListener implements MouseListener, MouseMotionListener {
+public class InputListener implements MouseListener, MouseMotionListener{
+    private final MainWindow MAIN_WINDOW;
+
     private final ChessPanel CHESS_PANEL;
 
     private final ChessBoard CHESS_BOARD;
 
-    public InputListener(ChessPanel chessPanel){
-        this.CHESS_PANEL = chessPanel;
+    public InputListener(){
+        this.MAIN_WINDOW = MainWindow.getMainWindowClass();
 
-        this.CHESS_BOARD = chessPanel.getCHESS_BOARD();
+        this.CHESS_PANEL = ChessPanel.getChessPanelClass();
+
+        this.CHESS_BOARD = CHESS_PANEL.getCHESS_BOARD();
     }
 
     @Override
@@ -47,7 +50,6 @@ public class InputListener implements MouseListener, MouseMotionListener {
 
     @Override
     public void mouseDragged(MouseEvent e) {
-        System.out.println("ici");
         CHESS_PANEL.setDragPosition(new Position(e.getX(), e.getY()));
         CHESS_PANEL.repaint();
     }

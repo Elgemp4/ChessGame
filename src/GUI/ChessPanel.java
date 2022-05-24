@@ -10,6 +10,8 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class ChessPanel extends JPanel {
+    private static ChessPanel chessPanelClass;
+
     private final ChessBoard CHESS_BOARD;
 
     private final Color BACKGROUND_COLOR = new Color(84, 84, 84);
@@ -28,11 +30,13 @@ public class ChessPanel extends JPanel {
     private final InputListener INPUT_LISTENER;
 
     public ChessPanel() {
+        chessPanelClass = this;
+
         setPreferredSize(new Dimension(chessBoardSize, chessBoardSize));
 
         CHESS_BOARD = new ChessBoard();
 
-        INPUT_LISTENER = new InputListener(this);
+        INPUT_LISTENER = new InputListener();
 
         addMouseListener(INPUT_LISTENER);
 
@@ -68,7 +72,6 @@ public class ChessPanel extends JPanel {
         chessBoardSize = Math.min(getWidth(), getHeight());
 
         caseSize = chessBoardSize / 8;
-        System.out.println(caseSize);
 
         xOffset = getWidth() / 2 - chessBoardSize / 2;
         yOffset = getHeight() / 2 - chessBoardSize / 2;
@@ -77,8 +80,11 @@ public class ChessPanel extends JPanel {
 
     private void moveSelected(Graphics2D g) {
         if(dragPosition != null){
-            drawCase(getCHESS_BOARD().getSelectedPiece().getCurrentPosition(), g);
-            drawPiece(g, getCHESS_BOARD().getSelectedPiece(), dragPosition);
+            if(getCHESS_BOARD().isInSelectionMode()){
+                drawCase(getCHESS_BOARD().getSelectedPiece().getCurrentPosition(), new Color(246, 246, 104), g);
+                drawPiece(g, getCHESS_BOARD().getSelectedPiece(), dragPosition);
+            }
+
         }
     }
 
@@ -199,5 +205,9 @@ public class ChessPanel extends JPanel {
 
     public ChessBoard getCHESS_BOARD() {
         return CHESS_BOARD;
+    }
+
+    public static ChessPanel getChessPanelClass() {
+        return chessPanelClass;
     }
 }
