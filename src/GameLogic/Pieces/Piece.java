@@ -2,7 +2,6 @@ package GameLogic.Pieces;
 
 import GameLogic.ChessBoard;
 import GameLogic.Index;
-import GameLogic.Position;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -62,9 +61,8 @@ public abstract class Piece {
         String colorString = (pieceTeam == BLACK) ? "black" : "white";
 
         try {
-            this.sprite = ImageIO.read(new File("src/Sprites/"+colorString +"_"+ getPieceName() + ".png"));
-
-        } catch (IOException e) {
+            this.sprite = ImageIO.read(this.getClass().getClassLoader().getResourceAsStream("Sprites/"+colorString +"_"+ getPieceName() + ".png"));
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
