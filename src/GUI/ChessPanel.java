@@ -202,6 +202,7 @@ public class ChessPanel extends JPanel {
 
         if(CHESS_BOARD.getWhomTurn() == Piece.BLACK) {
             yIndex = 7 - yIndex;
+            xIndex = 7 - xIndex;
         }
 
         return new Index(xIndex, yIndex);
@@ -216,10 +217,11 @@ public class ChessPanel extends JPanel {
         int posY;
 
         if(CHESS_BOARD.getWhomTurn() == Piece.BLACK) {
-            posX = (x * caseSize + xOffset) + offset;
+            posX = (x * caseSize + xOffset) - offset;
             posY = (y * caseSize + yOffset) - offset;
 
             posY = getHeight() - caseSize - posY;
+            posX = getWidth() - caseSize - posX;
         }
         else{
             posX = (x * caseSize + xOffset) + offset;

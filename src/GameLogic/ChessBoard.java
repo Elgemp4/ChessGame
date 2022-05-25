@@ -48,10 +48,10 @@ public class ChessBoard {
             }
 
             //Roi
-            chessBoard[firstLine][4] = new King(color, new Index(4, firstLine));
+            chessBoard[firstLine][3] = new King(color, new Index(3, firstLine));
 
             //Reine
-            chessBoard[firstLine][3] = new Queen(color, new Index(3, firstLine));
+            chessBoard[firstLine][4] = new Queen(color, new Index(4, firstLine));
         }
     }
 
