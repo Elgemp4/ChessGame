@@ -27,14 +27,14 @@ public class InputListener implements MouseListener, MouseMotionListener{
 
     @Override
     public void mousePressed(MouseEvent e) {
-        CHESS_BOARD.handleClick(CHESS_PANEL.getBoardPosition(e.getX(), e.getY()), true);
+        CHESS_BOARD.handleClick(CHESS_PANEL.getBoardIndex(e.getX(), e.getY()), true);
         CHESS_PANEL.repaint();
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
         CHESS_PANEL.resetDragPosition();
-        CHESS_BOARD.handleClick(CHESS_PANEL.getBoardPosition(e.getX(), e.getY()), false);
+        CHESS_BOARD.handleClick(CHESS_PANEL.getBoardIndex(e.getX(), e.getY()), false);
         CHESS_PANEL.repaint();
     }
 

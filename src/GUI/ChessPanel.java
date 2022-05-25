@@ -1,6 +1,7 @@
 package GUI;
 
 import GameLogic.ChessBoard;
+import GameLogic.Index;
 import GameLogic.InputListener;
 import GameLogic.Pieces.Piece;
 import GameLogic.Position;
@@ -81,7 +82,7 @@ public class ChessPanel extends JPanel {
     private void moveSelected(Graphics2D g) {
         if(dragPosition != null){
             if(getCHESS_BOARD().isInSelectionMode()){
-                drawCase(getCHESS_BOARD().getSelectedPiece().getCurrentPosition(), new Color(246, 246, 104), g);
+                drawCase(getCHESS_BOARD().getSelectedPiece().getCurrentIndex(), new Color(246, 246, 104), g);
                 drawPiece(g, getCHESS_BOARD().getSelectedPiece(), dragPosition);
             }
 
@@ -97,22 +98,21 @@ public class ChessPanel extends JPanel {
     private void drawGrid(Graphics2D g){
         for (int col = 0; col < 8; col++) {
             for (int row = 0; row < 8; row++) {
-                drawCase(new Position(col, row), g);
+                drawCase(new Index(col, row), g);
             }
         }
     }
 
-    private void drawCase(Position position, Graphics2D g) {
-        drawCase(position, (position.getX() + position.getY()) % 2 == 0 ? CHESS_COLOR_2 : CHESS_COLOR_1, g);
+    private void drawCase(Index index, Graphics2D g) {
+        drawCase(index, (index.getX() + index.getY()) % 2 == 0 ? CHESS_COLOR_2 : CHESS_COLOR_1, g);
     }
 
-    private void drawCase(Position position, Color color, Graphics2D g) {
+    private void drawCase(Index index, Color color, Graphics2D g) {
         g.setColor(color);
 
-        int x = xOffset + position.getX() * caseSize;
-        int y = yOffset + position.getY() * caseSize;
+        Position drawPosition = getScreenPosition(index.getX(), index.getY());
 
-        g.fillRect(x, y, caseSize, caseSize);
+        g.fillRect(drawPosition.getX(), drawPosition.getY(), caseSize, caseSize);
     }
 
     private void drawPieces(Graphics2D g) {
@@ -132,10 +132,9 @@ public class ChessPanel extends JPanel {
             return;
         }
 
-        int drawX = xOffset + piece.getCurrentPosition().getX() * caseSize;
-        int drawY = yOffset + piece.getCurrentPosition().getY() * caseSize;
+        Position drawPosition = getScreenPosition(piece.getCurrentIndex().getX(), piece.getCurrentIndex().getY());
 
-        drawPiece(g, piece, new Position(drawX, drawY));
+        drawPiece(g, piece, drawPosition);
     }
 
     private void drawPiece(Graphics2D g, Piece piece, Position position) {
@@ -153,33 +152,31 @@ public class ChessPanel extends JPanel {
             return;
         }
 
-        ArrayList<Position> possibleMoves = selectedPiece.getAvailableMoves();
+        ArrayList<Index> possibleMoves = selectedPiece.getAvailableMoves();
 
-        drawCase(selectedPiece.getCurrentPosition(), new Color(246, 246, 104), g);
+        drawCase(selectedPiece.getCurrentIndex(), new Color(246, 246, 104), g);
         drawPiece(g, selectedPiece);
 
-        for (Position position : possibleMoves) {
-            if(CHESS_BOARD.getChessBoardArray()[position.getY()][position.getX()] == null) {
-                drawSelectedCase(position, g);
+        for (Index index : possibleMoves) {
+            if(CHESS_BOARD.isEmpty(CHESS_BOARD.getChessBoardArray()[index.getY()][index.getX()])) {
+                drawSelectedCase(index, g);
             }
             else{
-                drawPieceAttackCircle(position, g);
+                drawPieceAttackCircle(index, g);
             }
         }
     }
 
-    private void drawSelectedCase(Position position, Graphics2D g) {
+    private void drawSelectedCase(Index index, Graphics2D g) {
         g.setColor(new Color(10,10,10,50));
 
-        int x = xOffset + position.getX() * caseSize + caseSize / 3;
-        int y = yOffset + position.getY() * caseSize + caseSize / 3;
+        Position drawPosition = getScreenPosition(index.getX(), index.getY(), caseSize / 3);
 
-        g.fillOval(x, y, caseSize /3, caseSize /3);
+        g.fillOval(drawPosition.getX(), drawPosition.getY(), caseSize /3, caseSize /3);
     }
 
-    private void drawPieceAttackCircle(Position position, Graphics2D g) {
-        int x = xOffset + position.getX() * caseSize + caseSize / 16;
-        int y = yOffset + position.getY() * caseSize + caseSize / 16;
+    private void drawPieceAttackCircle(Index index, Graphics2D g) {
+        Position drawPosition = getScreenPosition(index.getX(), index.getY(), caseSize / 16);
 
         int diameter = caseSize * 14 / 16;
         int lineThickness = caseSize * 2 / 16;
@@ -188,7 +185,7 @@ public class ChessPanel extends JPanel {
 
         g.setStroke(new BasicStroke(lineThickness));
 
-        g.drawOval(x, y, diameter, diameter);
+        g.drawOval(drawPosition.getX(), drawPosition.getY(), diameter, diameter);
     }
 
     public void resetDragPosition() {
@@ -199,8 +196,37 @@ public class ChessPanel extends JPanel {
         this.dragPosition = new Position(dragPosition.getX() - caseSize / 2, dragPosition.getY() - caseSize / 2);
     }
 
-    public Position getBoardPosition(int x, int y) {
-        return new Position((x - xOffset) / caseSize, (y - yOffset) / caseSize);
+    public Index getBoardIndex(int x, int y) {
+        int xIndex = (x - xOffset) / caseSize;
+        int yIndex = (y - yOffset) / caseSize;
+
+        if(CHESS_BOARD.getWhomTurn() == Piece.BLACK) {
+            yIndex = 7 - yIndex;
+        }
+
+        return new Index(xIndex, yIndex);
+    }
+
+    public Position getScreenPosition(int x, int y) {
+        return getScreenPosition(x, y, 0);
+    }
+
+    public Position getScreenPosition(int x, int y, int offset) {
+        int posX;
+        int posY;
+
+        if(CHESS_BOARD.getWhomTurn() == Piece.BLACK) {
+            posX = (x * caseSize + xOffset) + offset;
+            posY = (y * caseSize + yOffset) - offset;
+
+            posY = getHeight() - caseSize - posY;
+        }
+        else{
+            posX = (x * caseSize + xOffset) + offset;
+            posY = (y * caseSize + yOffset) + offset;
+        }
+
+        return new Position(posX, posY);
     }
 
     public ChessBoard getCHESS_BOARD() {
@@ -209,5 +235,9 @@ public class ChessPanel extends JPanel {
 
     public static ChessPanel getChessPanelClass() {
         return chessPanelClass;
+    }
+
+    public int getChessBoardSize() {
+        return chessBoardSize;
     }
 }

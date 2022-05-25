@@ -1,10 +1,11 @@
 package GameLogic.Pieces;
 
+import GameLogic.Index;
 import GameLogic.Position;
 
 public class Rook extends Piece{
-    public Rook(int color, Position position) {
-        super(color, position);
+    public Rook(int color, Index index) {
+        super(color, index);
     }
 
     @Override
@@ -18,19 +19,19 @@ public class Rook extends Piece{
 
         for (int axis = 0; axis < 2; axis++) {
             for (int direction = -1; direction < 2; direction+=2) {
-                Position checkPosition = currentPosition;
+                Index checkIndex = currentIndex;
                 while(true){
-                    checkPosition = new Position(checkPosition.getX() + ((axis == 0) ? direction : 0), checkPosition.getY() + ((axis == 1) ? direction : 0));
-                    if(!chessBoard.isInGrid(checkPosition) ){
+                    checkIndex = new Index(checkIndex.getX() + ((axis == 0) ? direction : 0), checkIndex.getY() + ((axis == 1) ? direction : 0));
+                    if(!chessBoard.isInGrid(checkIndex) ){
                         break;
                     }
-                    if(chessBoard.getPieceAtPosition(checkPosition) != null) {
-                        if (chessBoard.getPieceAtPosition(checkPosition).getPieceTeam() != chessBoard.getWhomTurn()) {
-                            availableMoves.add(checkPosition);
+                    if(chessBoard.getPieceAtIndex(checkIndex) != null) {
+                        if (chessBoard.getPieceAtIndex(checkIndex).getPieceTeam() != chessBoard.getWhomTurn()) {
+                            availableMoves.add(checkIndex);
                         }
                         break;
                     }
-                    availableMoves.add(checkPosition);
+                    availableMoves.add(checkIndex);
                 }
             }
         }

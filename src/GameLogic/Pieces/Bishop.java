@@ -1,10 +1,10 @@
 package GameLogic.Pieces;
 
-import GameLogic.Position;
+import GameLogic.Index;
 
 public class Bishop extends Piece{
-    public Bishop(int color, Position position) {
-        super(color, position);
+    public Bishop(int color, Index index) {
+        super(color, index);
     }
 
     @Override
@@ -19,19 +19,19 @@ public class Bishop extends Piece{
         for (int xDirection = -1; xDirection < 2; xDirection+=2) {
             for (int yDirection = -1; yDirection < 2; yDirection+=2) {
 
-                Position checkPosition = currentPosition;
+                Index checkIndex = currentIndex;
                 while(true){
-                    checkPosition = new Position(checkPosition.getX() + xDirection, checkPosition.getY() + yDirection);
-                    if(!chessBoard.isInGrid(checkPosition) ){
+                    checkIndex = new Index(checkIndex.getX() + xDirection, checkIndex.getY() + yDirection);
+                    if(!chessBoard.isInGrid(checkIndex) ){
                         break;
                     }
-                    if(chessBoard.getPieceAtPosition(checkPosition) != null) {
-                        if (chessBoard.getPieceAtPosition(checkPosition).getPieceTeam() != chessBoard.getWhomTurn()) {
-                            availableMoves.add(checkPosition);
+                    if(chessBoard.getPieceAtIndex(checkIndex) != null) {
+                        if (chessBoard.getPieceAtIndex(checkIndex).getPieceTeam() != chessBoard.getWhomTurn()) {
+                            availableMoves.add(checkIndex);
                         }
                         break;
                     }
-                    availableMoves.add(checkPosition);
+                    availableMoves.add(checkIndex);
                 }
             }
         }

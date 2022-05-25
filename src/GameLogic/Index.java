@@ -1,20 +1,15 @@
 package GameLogic;
 
-import GUI.ChessPanel;
 import GameLogic.Pieces.Piece;
 
-import java.util.Objects;
-
-public class Position {
+public class Index {
     private ChessBoard chessBoard;
-    private ChessPanel chessPanel;
 
     private int x;
     private int y;
 
-    public Position(int x, int y) {
+    public Index(int x, int y) {
         this.chessBoard = ChessBoard.getChessBoardClass();
-        this.chessPanel = ChessPanel.getChessPanelClass();
 
         setY(y);
         setX(x);
@@ -24,7 +19,7 @@ public class Position {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Position position = (Position) o;
+        Index position = (Index) o;
         return x == position.x && y == position.y;
     }
 

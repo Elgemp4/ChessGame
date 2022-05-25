@@ -1,10 +1,11 @@
 package GameLogic.Pieces;
 
+import GameLogic.Index;
 import GameLogic.Position;
 
 public class King extends Piece {
-    public King(int color, Position position) {
-        super(color, position);
+    public King(int color, Index index) {
+        super(color, index);
     }
 
     @Override
@@ -19,10 +20,10 @@ public class King extends Piece {
         for (int x = -1; x < 2; x++) {
             for (int y = -1; y < 2; y++) {
                 if(!(x == 0 && y == 0)){
-                    Position surroundingPosition = new Position(currentPosition.getX() + x, currentPosition.getY() + y);
-                    if(chessBoard.isInGrid(surroundingPosition)){
-                        if(chessBoard.getPieceAtPosition(surroundingPosition) == null || chessBoard.getPieceAtPosition(surroundingPosition).getPieceTeam() != chessBoard.getWhomTurn()){
-                            availableMoves.add(surroundingPosition);
+                    Index surroundingIndex = new Index(currentIndex.getX() + x, currentIndex.getY() + y);
+                    if(chessBoard.isInGrid(surroundingIndex)){
+                        if(chessBoard.getPieceAtIndex(surroundingIndex) == null || chessBoard.getPieceAtIndex(surroundingIndex).getPieceTeam() != chessBoard.getWhomTurn()){
+                            availableMoves.add(surroundingIndex);
                         }
                     }
                 }

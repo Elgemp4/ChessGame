@@ -1,11 +1,12 @@
 package GameLogic.Pieces;
 
 
+import GameLogic.Index;
 import GameLogic.Position;
 
 public class Pawn extends Piece{
-    public Pawn(int color, Position position) {
-        super(color, position);
+    public Pawn(int color, Index index) {
+        super(color, index);
     }
 
     @Override
@@ -17,13 +18,13 @@ public class Pawn extends Piece{
     public void computeAvailableMoves() {
         availableMoves.clear();
 
-        Position frontPosition = new Position(currentPosition.getX(), currentPosition.getY() + pieceTeam);
-        Position doubleFrontPosition = new Position(currentPosition.getX(), currentPosition.getY() + pieceTeam * 2);
+        Index frontPosition = new Index(currentIndex.getX(), currentIndex.getY() + pieceTeam);
+        Index doubleFrontPosition = new Index(currentIndex.getX(), currentIndex.getY() + pieceTeam * 2);
 
         if(chessBoard.isInGrid(frontPosition)){
-            if(chessBoard.getPieceAtPosition(frontPosition) == null){
+            if(chessBoard.getPieceAtIndex(frontPosition) == null){
                 availableMoves.add(frontPosition);
-                if(!hasMoved && chessBoard.getPieceAtPosition(doubleFrontPosition) == null){
+                if(!hasMoved && chessBoard.getPieceAtIndex(doubleFrontPosition) == null){
                     availableMoves.add(doubleFrontPosition);
                 }
             }
@@ -31,10 +32,10 @@ public class Pawn extends Piece{
 
         //Prise de pièces sur le côté
         for (int i = -1; i <= 1; i+=2) {
-            Position cornerPosition = new Position(currentPosition.getX() + i, currentPosition.getY() + pieceTeam);
+            Index cornerPosition = new Index(currentIndex.getX() + i, currentIndex.getY() + pieceTeam);
 
             if(chessBoard.isInGrid(cornerPosition)){
-                if(chessBoard.getPieceAtPosition(cornerPosition) != null && chessBoard.getPieceAtPosition(cornerPosition).getPieceTeam() != chessBoard.getWhomTurn()){
+                if(chessBoard.getPieceAtIndex(cornerPosition) != null && chessBoard.getPieceAtIndex(cornerPosition).getPieceTeam() != chessBoard.getWhomTurn()){
                     availableMoves.add(cornerPosition);
                 }
             }

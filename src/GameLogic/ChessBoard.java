@@ -4,7 +4,7 @@ import GameLogic.Pieces.*;
 
 
 public class ChessBoard {
-    private static ChessBoard thisClass;
+    private static ChessBoard chessBoardClass;
 
     private Piece[][] chessBoard;
 
@@ -13,7 +13,7 @@ public class ChessBoard {
     private int whomTurn = Piece.WHITE;
 
     public ChessBoard() {
-        thisClass = this;
+        chessBoardClass = this;
 
         placePiecesOnBoard();
 
@@ -29,44 +29,45 @@ public class ChessBoard {
 
             //Ligne de pions
             for (int x = 0; x <= 7; x++) {
-                chessBoard[secondLine][x] = new Pawn(color, new Position(x, secondLine));
+                chessBoard[secondLine][x] = new Pawn(color, new Index(x, secondLine));
             }
 
             //Tours
             for (int x = 0; x <= 7; x+=7) {
-                chessBoard[firstLine][x] = new Rook(color, new Position(x, firstLine));
+                chessBoard[firstLine][x] = new Rook(color, new Index(x, firstLine));
             }
 
             //Chevaliers
             for (int x = 1; x <= 6; x+=5) {
-                chessBoard[firstLine][x] = new Knight(color, new Position(x, firstLine));
+                chessBoard[firstLine][x] = new Knight(color, new Index(x, firstLine));
             }
 
             //Fous
             for (int x = 2; x <= 5; x+=3) {
-                chessBoard[firstLine][x] = new Bishop(color, new Position(x, firstLine));
+                chessBoard[firstLine][x] = new Bishop(color, new Index(x, firstLine));
             }
 
             //Roi
-            chessBoard[firstLine][3] = new King(color, new Position(3, firstLine));
+            chessBoard[firstLine][4] = new King(color, new Index(4, firstLine));
 
             //Reine
-            chessBoard[firstLine][4] = new Queen(color, new Position(4, firstLine));
+            chessBoard[firstLine][3] = new Queen(color, new Index(3, firstLine));
         }
     }
 
 
-    public void handleClick(Position clickedPosition, boolean canSelect) {
-        if(!isInGrid(clickedPosition)){
+    public void handleClick(Index clickedIndex, boolean canSelect) {
+        if(!isInGrid(clickedIndex)){
             return;
         }
-        Piece pieceWhereClicked = getPieceAtPosition(clickedPosition);
+
+        Piece pieceWhereClicked = getPieceAtIndex(clickedIndex);
         Piece selectedPiece = getSelectedPiece();
 
         if(isInSelectionMode()) {
-            if(selectedPiece.isAValidMove(clickedPosition)){
-                if(isEmpty(pieceWhereClicked)){
-                    movePiece(selectedPiece, clickedPosition);
+            if(selectedPiece.isAValidMove(clickedIndex)){
+                if(isEmpty(pieceWhereClicked) || pieceWhereClicked.getPieceTeam() != whomTurn){
+                    movePiece(selectedPiece, clickedIndex);
                     computeMoves();
                     return;
                 }
@@ -89,9 +90,9 @@ public class ChessBoard {
         }
     }
 
-    public void movePiece(Piece piece, Position position) {
-        if(piece.isAValidMove(position)){
-            Piece pieceWhereMove = getPieceAtPosition(position);
+    public void movePiece(Piece piece, Index index) {
+        if(piece.isAValidMove(index)){
+            Piece pieceWhereMove = getPieceAtIndex(index);
 
             if(pieceWhereMove!=null){
                 if(pieceWhereMove instanceof King){
@@ -104,7 +105,7 @@ public class ChessBoard {
 
             removePiece(piece);
 
-            piece.setCurrentPosition(position);
+            piece.setCurrentIndex(index);
 
             addPiece(piece);
 
@@ -124,24 +125,24 @@ public class ChessBoard {
     }
 
     private void removePiece(Piece piece) {
-        Position piecePosition = piece.getCurrentPosition();
+        Index pieceIndex = piece.getCurrentIndex();
 
-        chessBoard[piecePosition.getY()][piecePosition.getX()] = null;
+        chessBoard[pieceIndex.getY()][pieceIndex.getX()] = null;
     }
 
     private void addPiece(Piece piece){
-        Position piecePosition = piece.getCurrentPosition();
+        Index pieceIndex = piece.getCurrentIndex();
 
-        chessBoard[piecePosition.getY()][piecePosition.getX()] = piece;
+        chessBoard[pieceIndex.getY()][pieceIndex.getX()] = piece;
     }
 
-    public Piece getPieceAtPosition(Position position) {
-        return chessBoard[position.getY()][position.getX()];
+    public Piece getPieceAtIndex(Index index) {
+        return chessBoard[index.getY()][index.getX()];
     }
 
-    public boolean isInGrid(Position position) {
+    public boolean isInGrid(Index index) {
 
-        return !(position.getX() < 0 || position.getX() > 7 || position.getY() < 0 || position.getY() > 7);
+        return !(index.getX() < 0 || index.getX() > 7 || index.getY() < 0 || index.getY() > 7);
     }
 
     public boolean isInSelectionMode() {
@@ -179,7 +180,7 @@ public class ChessBoard {
         return whomTurn;
     }
 
-    public static ChessBoard getThisClass() {
-        return thisClass;
+    public static ChessBoard getChessBoardClass() {
+        return chessBoardClass;
     }
 }

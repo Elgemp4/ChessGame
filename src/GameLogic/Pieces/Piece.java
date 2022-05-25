@@ -1,6 +1,7 @@
 package GameLogic.Pieces;
 
 import GameLogic.ChessBoard;
+import GameLogic.Index;
 import GameLogic.Position;
 
 import javax.imageio.ImageIO;
@@ -21,36 +22,36 @@ public abstract class Piece {
 
     protected boolean hasMoved = false;
 
-    protected ArrayList<Position> availableMoves;
+    protected ArrayList<Index> availableMoves;
 
-    protected Position currentPosition;
+    protected Index currentIndex;
 
-    public Piece(int color, Position position) {
-        this.chessBoard = ChessBoard.getThisClass();
+    public Piece(int color, Index index) {
+        this.chessBoard = ChessBoard.getChessBoardClass();
 
         this.availableMoves = new ArrayList<>();
 
         this.pieceTeam = color;
 
-        this.currentPosition = position;
+        this.currentIndex = index;
 
         loadSprite();
     }
 
-    public boolean isAValidMove(Position movePosition) {
-        return availableMoves.contains(movePosition);
+    public boolean isAValidMove(Index moveIndex) {
+        return availableMoves.contains(moveIndex);
     }
 
     public int getPieceTeam() {
         return pieceTeam;
     }
 
-    public Position getCurrentPosition() {
-        return currentPosition;
+    public Index getCurrentIndex() {
+        return currentIndex;
     }
 
-    public void setCurrentPosition(Position currentPosition) {
-        this.currentPosition = currentPosition;
+    public void setCurrentIndex(Index currentIndex) {
+        this.currentIndex = currentIndex;
 
         chessBoard.computeMoves();
 
@@ -74,7 +75,7 @@ public abstract class Piece {
 
     abstract protected String getPieceName();
 
-    public ArrayList<Position> getAvailableMoves() {
+    public ArrayList<Index> getAvailableMoves() {
         return availableMoves;
     }
 
