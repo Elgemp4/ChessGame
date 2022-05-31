@@ -1,12 +1,10 @@
-package GameLogic.Pieces;
+package Logic.Pieces;
 
-import GameLogic.ChessBoard;
-import GameLogic.Index;
+import Logic.ChessBoard;
+import Logic.Index;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public abstract class Piece {

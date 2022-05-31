@@ -1,6 +1,4 @@
-package GameLogic;
-
-import GameLogic.Pieces.Piece;
+package Logic;
 
 public class Index {
     private ChessBoard chessBoard;

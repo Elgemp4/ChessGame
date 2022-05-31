@@ -8,14 +8,14 @@ public class MainWindow extends JFrame {
 
     private final MenuPanel MENU_PANEL;
 
-    private final ChessPanel CHESS_BOARD;
+    private final GamePanel CHESS_BOARD;
 
     public MainWindow() {
         super("Chess");
 
         mainWindowClass = this;
 
-        CHESS_BOARD = new ChessPanel();
+        CHESS_BOARD = new GamePanel();
         MENU_PANEL = new MenuPanel();
 
 

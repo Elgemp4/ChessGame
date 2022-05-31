@@ -1,17 +1,14 @@
 package GUI;
 
-import GameLogic.ChessBoard;
-import GameLogic.Index;
-import GameLogic.InputListener;
-import GameLogic.Pieces.Piece;
-import GameLogic.Position;
+import Logic.*;
+import Logic.Pieces.Piece;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class ChessPanel extends JPanel {
-    private static ChessPanel chessPanelClass;
+public class GamePanel extends JPanel {
+    private static GamePanel gamePanelClass;
 
     private final ChessBoard CHESS_BOARD;
 
@@ -28,20 +25,29 @@ public class ChessPanel extends JPanel {
 
     private Position dragPosition;
 
-    private final InputListener INPUT_LISTENER;
+    private final ChessInputListener CHESS_LISTENER;
+    private final MenuListener MENU_LISTENER;
 
-    public ChessPanel() {
-        chessPanelClass = this;
+    private final Menu MENU;
+
+    public GamePanel() {
+        gamePanelClass = this;
 
         setPreferredSize(new Dimension(chessBoardSize, chessBoardSize));
 
         CHESS_BOARD = new ChessBoard();
+        MENU = new Menu();
 
-        INPUT_LISTENER = new InputListener();
+        CHESS_LISTENER = new ChessInputListener();
+        MENU_LISTENER = new MenuListener();
 
-        addMouseListener(INPUT_LISTENER);
+        addMouseListener(CHESS_LISTENER);
+        addMouseMotionListener(CHESS_LISTENER);
 
-        addMouseMotionListener(INPUT_LISTENER);
+        addMouseListener(MENU_LISTENER);
+        addMouseMotionListener(MENU_LISTENER);
+
+
     }
 
 
@@ -66,8 +72,14 @@ public class ChessPanel extends JPanel {
 
         moveSelected(graphics2D);
 
+        if(CHESS_BOARD.isGameOver()){
+            MENU.drawMenu(graphics2D);
+        }
+
         g.dispose();
     }
+
+
 
     private void trackChessDimensions() {
         chessBoardSize = Math.min(getWidth(), getHeight());
@@ -76,6 +88,8 @@ public class ChessPanel extends JPanel {
 
         xOffset = getWidth() / 2 - chessBoardSize / 2;
         yOffset = getHeight() / 2 - chessBoardSize / 2;
+
+        MENU.actualizeMenuDisposition();
     }
 
 
@@ -235,11 +249,23 @@ public class ChessPanel extends JPanel {
         return CHESS_BOARD;
     }
 
-    public static ChessPanel getChessPanelClass() {
-        return chessPanelClass;
+    public static GamePanel getGamePanelClass() {
+        return gamePanelClass;
     }
 
     public int getChessBoardSize() {
         return chessBoardSize;
+    }
+
+    public int getXOffset() {
+        return xOffset;
+    }
+
+    public int getYOffset() {
+        return yOffset;
+    }
+
+    public Menu getMENU() {
+        return MENU;
     }
 }

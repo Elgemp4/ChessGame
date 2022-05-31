@@ -1,20 +1,17 @@
-package GameLogic;
+package Logic;
 
-import GUI.ChessPanel;
-import GameLogic.Pieces.Piece;
-
-import java.util.Objects;
+import GUI.GamePanel;
 
 public class Position {
     private ChessBoard chessBoard;
-    private ChessPanel chessPanel;
+    private GamePanel chessPanel;
 
     private int x;
     private int y;
 
     public Position(int x, int y) {
         this.chessBoard = ChessBoard.getChessBoardClass();
-        this.chessPanel = ChessPanel.getChessPanelClass();
+        this.chessPanel = GamePanel.getGamePanelClass();
 
         setY(y);
         setX(x);

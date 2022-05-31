@@ -1,10 +1,13 @@
-package GameLogic;
+package Logic;
 
-import GameLogic.Pieces.*;
+import GUI.GamePanel;
+import Logic.Pieces.*;
 
 
 public class ChessBoard {
     private static ChessBoard chessBoardClass;
+
+    private GamePanel gamePanel;
 
     private Piece[][] chessBoard;
 
@@ -12,8 +15,12 @@ public class ChessBoard {
 
     private int whomTurn = Piece.WHITE;
 
+    private boolean isGameOver = false;
+
     public ChessBoard() {
         chessBoardClass = this;
+
+        gamePanel = GamePanel.getGamePanelClass();
 
         placePiecesOnBoard();
 
@@ -96,10 +103,7 @@ public class ChessBoard {
 
             if(pieceWhereMove!=null){
                 if(pieceWhereMove instanceof King){
-                    //TODO Gameover
-                    placePiecesOnBoard();
-                    selectedPiece = null;
-                    return;
+                    isGameOver = true;
                 }
             }
 
@@ -109,7 +113,10 @@ public class ChessBoard {
 
             addPiece(piece);
 
-            whomTurn*=-1;
+            if(!isGameOver){
+                whomTurn*=-1;
+            }
+
         }
 
         selectedPiece = null;
@@ -136,6 +143,17 @@ public class ChessBoard {
         chessBoard[pieceIndex.getY()][pieceIndex.getX()] = piece;
     }
 
+    public void restartGame() {
+        whomTurn = Piece.WHITE;
+        selectedPiece = null;
+        isGameOver = false;
+
+        placePiecesOnBoard();
+        computeMoves();
+
+        gamePanel.repaint();
+    }
+
     public Piece getPieceAtIndex(Index index) {
         return chessBoard[index.getY()][index.getX()];
     }
@@ -147,10 +165,6 @@ public class ChessBoard {
 
     public boolean isInSelectionMode() {
         return selectedPiece != null;
-    }
-
-    public boolean isEmpty(Position position) {
-        return chessBoard[position.getY()][position.getX()] == null;
     }
 
     public boolean isEmpty(Piece piece) {
@@ -170,11 +184,13 @@ public class ChessBoard {
         }
     }
 
+    public boolean isGameOver() {
+        return isGameOver;
+    }
+
     public Piece[][] getChessBoardArray() {
         return chessBoard;
     }
-
-
 
     public int getWhomTurn() {
         return whomTurn;
@@ -183,4 +199,7 @@ public class ChessBoard {
     public static ChessBoard getChessBoardClass() {
         return chessBoardClass;
     }
+
+
+
 }

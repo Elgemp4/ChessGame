@@ -1,8 +1,7 @@
-package GameLogic.Pieces;
+package Logic.Pieces;
 
 
-import GameLogic.Index;
-import GameLogic.Position;
+import Logic.Index;
 
 public class Pawn extends Piece{
     public Pawn(int color, Index index) {

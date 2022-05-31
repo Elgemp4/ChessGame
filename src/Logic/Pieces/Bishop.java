@@ -1,6 +1,6 @@
-package GameLogic.Pieces;
+package Logic.Pieces;
 
-import GameLogic.Index;
+import Logic.Index;
 
 public class Bishop extends Piece{
     public Bishop(int color, Index index) {

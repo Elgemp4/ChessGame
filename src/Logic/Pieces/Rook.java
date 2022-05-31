@@ -1,7 +1,6 @@
-package GameLogic.Pieces;
+package Logic.Pieces;
 
-import GameLogic.Index;
-import GameLogic.Position;
+import Logic.Index;
 
 public class Rook extends Piece{
     public Rook(int color, Index index) {
