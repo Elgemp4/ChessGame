@@ -43,6 +43,10 @@ public class Pawn extends Piece{
 
     @Override
     protected void onMovement() {
+        int firstLine = (pieceTeam == Piece.WHITE) ? 7 : 0;
 
+        if(currentIndex.getX() == pieceTeam) {
+
+        }
     }
 }
