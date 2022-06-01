@@ -2,12 +2,16 @@ package Logic;
 
 import GUI.GamePanel;
 
+/**
+ * Classe représentant une position sur l'écran
+ */
 public class Position {
     private ChessBoard chessBoard;
     private GamePanel chessPanel;
 
     private int x;
     private int y;
+
 
     public Position(int x, int y) {
         this.chessBoard = ChessBoard.getChessBoardClass();

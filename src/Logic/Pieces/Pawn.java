@@ -45,8 +45,7 @@ public class Pawn extends Piece{
     @Override
     public void onMovement() {
         int firstLine = (pieceTeam == Piece.WHITE) ? 0 : 7;
-        System.out.println(currentIndex.getY());
-        System.out.println(firstLine);
+
         if(currentIndex.getY() == firstLine) {
             MainWindow.getMainWindowClass().getPromotionSelection().showSelectionDialog(this);
 

@@ -1,5 +1,8 @@
 package Logic;
 
+/**
+ * Classe représentant un index de jeu
+ */
 public class Index {
     private ChessBoard chessBoard;
 

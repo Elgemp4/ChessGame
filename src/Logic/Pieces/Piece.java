@@ -35,26 +35,46 @@ public abstract class Piece {
         loadSprite();
     }
 
+    /**
+     * Renvoie vrai si la pièce peut se déplacée à l'index fourni
+     * @param moveIndex
+     * @return
+     */
     public boolean isAValidMove(Index moveIndex) {
         return availableMoves.contains(moveIndex);
     }
 
+    /**
+     * Renvoie la couleur de la pièce
+     * @return
+     */
     public int getPieceTeam() {
         return pieceTeam;
     }
 
+    /**
+     * Renvoie l'index de la pièce
+     * @return
+     */
     public Index getCurrentIndex() {
         return currentIndex;
     }
 
+    /**
+     * Défini l'index de la pièce
+     * @param currentIndex
+     */
     public void setCurrentIndex(Index currentIndex) {
         this.currentIndex = currentIndex;
 
-        chessBoard.computeMoves();
+        chessBoard.computeAllMoves();
 
         hasMoved = true;
     }
 
+    /**
+     * Charge le sprite de la pièce
+     */
     private void loadSprite(){
         String colorString = (pieceTeam == BLACK) ? "black" : "white";
 
@@ -65,17 +85,35 @@ public abstract class Piece {
         }
     }
 
+    /**
+     * Renvoie le sprite de la pièce
+     * @return
+     */
     public BufferedImage getSprite() {
         return sprite;
     }
 
+    /**
+     * Méthode à override sur les différentes variantes de pièce permettant de savoir où charger le sprite de la pièce
+     * @return
+     */
     abstract protected String getPieceName();
 
+    /**
+     * Renvoie la liste des mouvements possibles par la pièce
+     * @return
+     */
     public ArrayList<Index> getAvailableMoves() {
         return availableMoves;
     }
 
+    /**
+     * Méthode à override qui calcule les différents déplacement possible par la pièce
+     */
     abstract public void computeAvailableMoves();
 
+    /**
+     * Méthode à override qui permet à la pièce d'exécuter du code lorsqu'elle se déplace s'il en a besoin
+     */
     abstract public void onMovement();
 }

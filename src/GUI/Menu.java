@@ -28,6 +28,10 @@ public class Menu {
         actualizeMenuDisposition();
     }
 
+    /**
+     * Dessiner le menu de victoire
+     * @param graphics2D
+     */
     public void drawMenu(Graphics2D graphics2D) {
         drawBackground(graphics2D);
 
@@ -36,11 +40,16 @@ public class Menu {
         drawButtons(graphics2D);
     }
 
+    //Dessiner l'arrière-plan transparent au-dessus du jeu
     private void drawBackground(Graphics2D graphics2D) {
         graphics2D.setColor(new Color(150,150,105, 200));
         graphics2D.fillRect(0, 0, gamePanel.getWidth(), gamePanel.getHeight());
     }
 
+    /**
+     * Dessine le texte de la victoire et le centre
+     * @param graphics2D
+     */
     private void drawVictoryText(Graphics2D graphics2D) {
         String victoryString = "Le joueur " + (chessBoard.getWhomTurn() == Piece.BLACK ? "noir" : "blanc") + " a gagné !";
 
@@ -56,21 +65,38 @@ public class Menu {
         graphics2D.drawString(victoryString, textX, textY);
     }
 
+    /**
+     * Dessines le bouton quitter et le bouton rejouer
+     * @param graphics2D
+     */
     private void drawButtons(Graphics2D graphics2D) {
         graphics2D.drawImage(restartButton.getButtonImage(), restartButton.getX(), restartButton.getY(), null);
         graphics2D.drawImage(quitButton.getButtonImage(), quitButton.getX(), quitButton.getY(), null);
     }
 
+    /**
+     * Vérifie si le click effectué active un des boutons
+     * @param x
+     * @param y
+     */
     public void checkClick(int x, int y) {
         restartButton.executeIfInHitbox(x, y);
         quitButton.executeIfInHitbox(x, y);
     }
 
+    /**
+     * Vérifie si la souris passe au-dessus d'un des boutons
+     * @param x
+     * @param y
+     */
     public void checkHover(int x, int y) {
         restartButton.highlightButtonIfHover(x, y);
         quitButton.highlightButtonIfHover(x, y);
     }
 
+    /**
+     * Actualize les informations relatives au dessin du menu en fonction de la taille de la fenêtre
+     */
     public void actualizeMenuDisposition() {
         int boardSize = gamePanel.getChessBoardSize();
 
@@ -87,6 +113,9 @@ public class Menu {
         quitButton.setDimension(buttonWidth, buttonHeight);
     }
 
+    /**
+     * Quite le jeu
+     */
     private void exitGame() {
         System.exit(0);
     }

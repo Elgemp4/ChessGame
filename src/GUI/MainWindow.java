@@ -6,7 +6,6 @@ import java.awt.*;
 public class MainWindow extends JFrame {
     private static MainWindow mainWindowClass;
 
-    private final MenuPanel MENU_PANEL;
 
     private final PromotionSelection PROMOTION_SELECTION;
 
@@ -18,11 +17,9 @@ public class MainWindow extends JFrame {
         mainWindowClass = this;
 
         CHESS_BOARD = new GamePanel();
-        MENU_PANEL = new MenuPanel();
+        add(CHESS_BOARD);
+
         PROMOTION_SELECTION = new PromotionSelection();
-
-
-        showChessBoard();
 
         setMinimumSize(new Dimension(300, 300));
 
@@ -31,16 +28,6 @@ public class MainWindow extends JFrame {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setVisible(true);
-    }
-
-    public void showMenu() {
-        remove(CHESS_BOARD);
-        add(MENU_PANEL);
-    }
-
-    public void showChessBoard() {
-        remove(MENU_PANEL);
-        add(CHESS_BOARD);
     }
 
     public static MainWindow getMainWindowClass() {
