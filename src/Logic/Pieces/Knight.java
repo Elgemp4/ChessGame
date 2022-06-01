@@ -36,7 +36,7 @@ public class Knight extends Piece{
     }
 
     @Override
-    protected void onMovement() {
+    public void onMovement() {
 
     }
 }

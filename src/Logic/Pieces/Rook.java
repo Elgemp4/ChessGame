@@ -38,7 +38,7 @@ public class Rook extends Piece{
     }
 
     @Override
-    protected void onMovement() {
+    public void onMovement() {
 
     }
 }

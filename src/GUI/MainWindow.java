@@ -8,6 +8,8 @@ public class MainWindow extends JFrame {
 
     private final MenuPanel MENU_PANEL;
 
+    private final PromotionSelection PROMOTION_SELECTION;
+
     private final GamePanel CHESS_BOARD;
 
     public MainWindow() {
@@ -17,6 +19,7 @@ public class MainWindow extends JFrame {
 
         CHESS_BOARD = new GamePanel();
         MENU_PANEL = new MenuPanel();
+        PROMOTION_SELECTION = new PromotionSelection();
 
 
         showChessBoard();
@@ -42,5 +45,9 @@ public class MainWindow extends JFrame {
 
     public static MainWindow getMainWindowClass() {
         return mainWindowClass;
+    }
+
+    public PromotionSelection getPromotionSelection() {
+        return PROMOTION_SELECTION;
     }
 }

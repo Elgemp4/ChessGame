@@ -1,6 +1,7 @@
 package Logic.Pieces;
 
 
+import GUI.MainWindow;
 import Logic.Index;
 
 public class Pawn extends Piece{
@@ -42,11 +43,15 @@ public class Pawn extends Piece{
     }
 
     @Override
-    protected void onMovement() {
-        int firstLine = (pieceTeam == Piece.WHITE) ? 7 : 0;
+    public void onMovement() {
+        int firstLine = (pieceTeam == Piece.WHITE) ? 0 : 7;
+        System.out.println(currentIndex.getY());
+        System.out.println(firstLine);
+        if(currentIndex.getY() == firstLine) {
+            MainWindow.getMainWindowClass().getPromotionSelection().showSelectionDialog(this);
 
-        if(currentIndex.getX() == pieceTeam) {
-
+            chessBoard.removePiece(this);
+            chessBoard.addPiece(MainWindow.getMainWindowClass().getPromotionSelection().getChoosenPromotion());
         }
     }
 }

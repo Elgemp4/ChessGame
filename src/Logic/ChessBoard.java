@@ -113,6 +113,8 @@ public class ChessBoard {
 
             addPiece(piece);
 
+            piece.onMovement();
+
             if(!isGameOver){
                 whomTurn*=-1;
             }
@@ -131,13 +133,13 @@ public class ChessBoard {
         }
     }
 
-    private void removePiece(Piece piece) {
+    public void removePiece(Piece piece) {
         Index pieceIndex = piece.getCurrentIndex();
 
         chessBoard[pieceIndex.getY()][pieceIndex.getX()] = null;
     }
 
-    private void addPiece(Piece piece){
+    public void addPiece(Piece piece){
         Index pieceIndex = piece.getCurrentIndex();
 
         chessBoard[pieceIndex.getY()][pieceIndex.getX()] = piece;

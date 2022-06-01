@@ -77,5 +77,5 @@ public abstract class Piece {
 
     abstract public void computeAvailableMoves();
 
-    abstract protected void onMovement();
+    abstract public void onMovement();
 }
