@@ -11,14 +11,20 @@ public class MenuListener implements MouseListener, MouseMotionListener{
     private ChessBoard chessBoard;
     private Menu menu;
 
+    private boolean isEnable;
+
     public MenuListener() {
         chessBoard = ChessBoard.getChessBoardClass();
-        menu = GamePanel.getGamePanelClass().getMENU();
+        menu = GamePanel.getGamePanelClass().getMenu();
+    }
+
+    public void setEnable(boolean enable) {
+        isEnable = enable;
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        if(chessBoard.isGameOver()){
+        if(isEnable){
             menu.checkClick(e.getX(), e.getY());
         }
 
@@ -26,7 +32,7 @@ public class MenuListener implements MouseListener, MouseMotionListener{
 
     @Override
     public void mouseMoved(MouseEvent e) {
-        if(chessBoard.isGameOver()){
+        if(isEnable){
             menu.checkHover(e.getX(), e.getY());
         }
     }

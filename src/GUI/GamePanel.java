@@ -100,9 +100,9 @@ public class GamePanel extends JPanel {
      */
     private void moveSelected(Graphics2D g) {
         if(dragPosition != null){
-            if(getCHESS_BOARD().isInSelectionMode()){
-                drawCase(getCHESS_BOARD().getSelectedPiece().getCurrentIndex(), new Color(246, 246, 104), g);
-                drawPiece(g, getCHESS_BOARD().getSelectedPiece(), dragPosition);
+            if(getChessBoard().isInSelectionMode()){
+                drawCase(getChessBoard().getSelectedPiece().getCurrentIndex(), new Color(246, 246, 104), g);
+                drawPiece(g, getChessBoard().getSelectedPiece(), dragPosition);
             }
 
         }
@@ -325,7 +325,7 @@ public class GamePanel extends JPanel {
         return new Position(posX, posY);
     }
 
-    public ChessBoard getCHESS_BOARD() {
+    public ChessBoard getChessBoard() {
         return CHESS_BOARD;
     }
 
@@ -345,7 +345,15 @@ public class GamePanel extends JPanel {
         return yOffset;
     }
 
-    public Menu getMENU() {
+    public Menu getMenu() {
         return MENU;
+    }
+
+    public ChessInputListener getChessListener() {
+        return CHESS_LISTENER;
+    }
+
+    public MenuListener getMenuListener() {
+        return MENU_LISTENER;
     }
 }

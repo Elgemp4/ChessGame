@@ -3,6 +3,10 @@ package Logic;
 import GUI.GamePanel;
 import Logic.Pieces.*;
 
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 
 public class ChessBoard {
     private static ChessBoard chessBoardClass;
@@ -82,7 +86,6 @@ public class ChessBoard {
             if(selectedPiece.isAValidMove(clickedIndex)){
                 if(isEmpty(pieceWhereClicked) || pieceWhereClicked.getPieceTeam() != whomTurn){
                     movePiece(selectedPiece, clickedIndex);
-                    computeAllMoves();
                     return;
                 }
             }
@@ -119,6 +122,8 @@ public class ChessBoard {
             if(pieceWhereMove!=null){
                 if(pieceWhereMove instanceof King){
                     isGameOver = true;
+                    gamePanel.getChessListener().setEnable(false);
+                    gamePanel.getMenuListener().setEnable(true);
                 }
             }
 
@@ -132,13 +137,31 @@ public class ChessBoard {
 
             piece.onMovement();
 
-            if(!isGameOver){
-                whomTurn*=-1;
-            }
-
+            delayNextTurn();
         }
 
         selectedPiece = null;
+    }
+
+    /**
+     * Ajoute un délai pour éviter que le retournement du plateau ne se fasse trop rapidement
+     */
+    private void delayNextTurn() {
+        gamePanel.getChessListener().setEnable(false);
+
+        Timer timer = new Timer(500, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(!isGameOver){
+                    whomTurn*=-1;
+                    gamePanel.repaint();
+                    gamePanel.getChessListener().setEnable(true);
+                    computeAllMoves();
+                }
+            }
+        });
+        timer.setRepeats(false);
+        timer.start();
     }
 
     /**
@@ -187,6 +210,9 @@ public class ChessBoard {
         computeAllMoves();
 
         gamePanel.repaint();
+
+        gamePanel.getChessListener().setEnable(true);
+        gamePanel.getMenuListener().setEnable(false);
     }
 
     /**

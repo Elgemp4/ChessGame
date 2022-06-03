@@ -6,7 +6,6 @@ import java.awt.*;
 public class MainWindow extends JFrame {
     private static MainWindow mainWindowClass;
 
-
     private final PromotionSelection PROMOTION_SELECTION;
 
     private final GamePanel CHESS_BOARD;
@@ -37,4 +36,6 @@ public class MainWindow extends JFrame {
     public PromotionSelection getPromotionSelection() {
         return PROMOTION_SELECTION;
     }
+
+
 }
