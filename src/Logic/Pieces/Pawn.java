@@ -35,7 +35,7 @@ public class Pawn extends Piece{
             Index cornerPosition = new Index(currentIndex.getX() + i, currentIndex.getY() + pieceTeam);
 
             if(chessBoard.isInGrid(cornerPosition)){
-                if(chessBoard.getPieceAtIndex(cornerPosition) != null && chessBoard.getPieceAtIndex(cornerPosition).getPieceTeam() != chessBoard.getWhomTurn()){
+                if(chessBoard.getPieceAtIndex(cornerPosition) != null){
                     availableMoves.add(cornerPosition);
                 }
             }

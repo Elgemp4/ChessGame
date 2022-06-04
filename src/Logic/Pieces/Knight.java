@@ -23,12 +23,14 @@ public class Knight extends Piece{
                     if(!chessBoard.isInGrid(checkIndex) ){
                         continue;
                     }
+
+                    availableMoves.add(checkIndex);
+
                     if(chessBoard.getPieceAtIndex(checkIndex) != null) {
-                        if (chessBoard.getPieceAtIndex(checkIndex).getPieceTeam() == chessBoard.getWhomTurn()) {
+                        if (chessBoard.getPieceAtIndex(checkIndex).getPieceTeam() == pieceTeam) {
                             continue;
                         }
                     }
-                    availableMoves.add(checkIndex);
                 }
             }
         }

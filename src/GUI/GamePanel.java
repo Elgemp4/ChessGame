@@ -221,7 +221,10 @@ public class GamePanel extends JPanel {
                 drawPossibleMove(index, g);
             }
             else{
-                drawPieceAttackCircle(index, g);
+                if(selectedPiece.getPieceTeam() != CHESS_BOARD.getPieceAtIndex(index).getPieceTeam()){
+                    drawPieceAttackCircle(index, g);
+                }
+
             }
         }
 

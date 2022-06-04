@@ -25,9 +25,7 @@ public class Rook extends Piece{
                         break;
                     }
                     if(chessBoard.getPieceAtIndex(checkIndex) != null) {
-                        if (chessBoard.getPieceAtIndex(checkIndex).getPieceTeam() != chessBoard.getWhomTurn()) {
-                            availableMoves.add(checkIndex);
-                        }
+                        availableMoves.add(checkIndex);
                         break;
                     }
                     availableMoves.add(checkIndex);

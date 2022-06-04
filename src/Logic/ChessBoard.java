@@ -6,6 +6,7 @@ import Logic.Pieces.*;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 
 public class ChessBoard {
@@ -343,7 +344,4 @@ public class ChessBoard {
     public static ChessBoard getChessBoardClass() {
         return chessBoardClass;
     }
-
-
-
 }
