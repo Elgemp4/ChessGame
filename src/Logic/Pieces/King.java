@@ -52,12 +52,15 @@ public class King extends Piece {
                 }
 
                 if (!possibleRook.hasMoved) { //Si la pièce à l'extrémité n'a jamais bougée on sait que c'est une tour
-                    Rook rook = (Rook) possibleRook;
-                    if (isSpaceBetweenEmpty(rook.getCurrentIndex().getX(), this.getCurrentIndex().getX(), searchIndex.getY())) {
-                        int xOffset = this.getCurrentIndex().getX() > rook.getCurrentIndex().getX() ? -2 : 2;
+                    if(possibleRook instanceof Rook) {
+                        Rook rook = (Rook) possibleRook;
+                        if (isSpaceBetweenEmpty(rook.getCurrentIndex().getX(), this.getCurrentIndex().getX(), searchIndex.getY())) {
+                            int xOffset = this.getCurrentIndex().getX() > rook.getCurrentIndex().getX() ? -2 : 2;
 
-                        castlingMoves.add(new Index(currentIndex.getX() + xOffset, currentIndex.getY()));
+                            castlingMoves.add(new Index(currentIndex.getX() + xOffset, currentIndex.getY()));
+                        }
                     }
+
                 }
             }
         }

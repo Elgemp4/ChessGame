@@ -75,6 +75,7 @@ public class PromotionSelection extends JDialog {
         createSelectionPiece();
         actualizeDisplay();
 
+        setLocationRelativeTo(MainWindow.getMainWindowClass());
         setVisible(true);
     }
 
