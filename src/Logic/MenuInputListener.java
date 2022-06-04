@@ -7,13 +7,13 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
-public class MenuListener implements MouseListener, MouseMotionListener{
+public class MenuInputListener implements MouseListener, MouseMotionListener{
     private ChessBoard chessBoard;
     private Menu menu;
 
     private boolean isEnable;
 
-    public MenuListener() {
+    public MenuInputListener() {
         chessBoard = ChessBoard.getChessBoardClass();
         menu = GamePanel.getGamePanelClass().getMenu();
     }

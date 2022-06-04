@@ -1,6 +1,7 @@
 package GUI;
 
 import Logic.*;
+import Logic.Pieces.King;
 import Logic.Pieces.Piece;
 
 import javax.swing.*;
@@ -26,7 +27,7 @@ public class GamePanel extends JPanel {
     private Position dragPosition;
 
     private final ChessInputListener CHESS_LISTENER;
-    private final MenuListener MENU_LISTENER;
+    private final MenuInputListener MENU_LISTENER;
 
     private final Menu MENU;
 
@@ -39,7 +40,7 @@ public class GamePanel extends JPanel {
         MENU = new Menu();
 
         CHESS_LISTENER = new ChessInputListener();
-        MENU_LISTENER = new MenuListener();
+        MENU_LISTENER = new MenuInputListener();
 
         addMouseListener(CHESS_LISTENER);
         addMouseMotionListener(CHESS_LISTENER);
@@ -223,6 +224,14 @@ public class GamePanel extends JPanel {
                 drawPieceAttackCircle(index, g);
             }
         }
+
+        if(selectedPiece instanceof King) {
+            King king = (King) selectedPiece;
+
+            for (Index possibleCastling : king.getCastlingMoves()) {
+                drawPossibleMove(possibleCastling, g);
+            }
+        }
     }
 
     /**
@@ -353,7 +362,7 @@ public class GamePanel extends JPanel {
         return CHESS_LISTENER;
     }
 
-    public MenuListener getMenuListener() {
+    public MenuInputListener getMenuListener() {
         return MENU_LISTENER;
     }
 }

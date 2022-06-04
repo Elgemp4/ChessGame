@@ -38,7 +38,7 @@ public class ChessBoard {
         chessBoard = new Piece[8][8];
         for (int color = -1; color <= 1; color+=2) {
 
-            int firstLine = (color == Piece.WHITE) ? 7 : 0;
+            int firstLine = getFirstLineForColor(color);
             int secondLine = (7 + color) % 7;
 
             //Ligne de pions
@@ -83,9 +83,24 @@ public class ChessBoard {
         Piece selectedPiece = getSelectedPiece();
 
         if(isInSelectionMode()) {
+            /*
+             * Cas où il s'agit d'un déplacement "normal"
+             */
             if(selectedPiece.isAValidMove(clickedIndex)){
                 if(isEmpty(pieceWhereClicked) || pieceWhereClicked.getPieceTeam() != whomTurn){
                     movePiece(selectedPiece, clickedIndex);
+                    delayNextTurn();
+                    return;
+                }
+            }
+            /*
+             * Cas où il s'agit d'un roque
+             */
+            else if(selectedPiece instanceof King) {
+                King king = (King) selectedPiece;
+
+                if(king.isACastlingMove(clickedIndex)){
+                    makeCastling(clickedIndex, king);
                     return;
                 }
             }
@@ -94,7 +109,36 @@ public class ChessBoard {
         if(canSelect){
             setSelectedPiece(pieceWhereClicked);
         }
+    }
 
+    private void makeCastling(Index clickedIndex, King king) {
+        Piece possibleRook;
+        
+        int rookOffset;
+        int kingOffset;
+
+        if(clickedIndex.getX() > king.getCurrentIndex().getX()){ //Grand roque
+            possibleRook = getPieceAtIndex(new Index(7, king.getCurrentIndex().getY()));
+            rookOffset = -3;
+            kingOffset = +2;
+        }
+        else{ //Petit roque
+            possibleRook = getPieceAtIndex(new Index(0, king.getCurrentIndex().getY()));
+            kingOffset = -2;
+            rookOffset = 2;
+        }
+
+        if(possibleRook instanceof Rook) {
+            Rook rook = (Rook) possibleRook;
+
+            Index newRookIndex = new Index(rook.getCurrentIndex().getX() + rookOffset, rook.getCurrentIndex().getY());
+            movePiece(rook, newRookIndex);
+            
+            Index newKingIndex = new Index(king.getCurrentIndex().getX() + kingOffset, king.getCurrentIndex().getY());
+            movePiece(king, newKingIndex);
+
+            delayNextTurn();
+        }
     }
 
     /**
@@ -116,29 +160,25 @@ public class ChessBoard {
      * @param index Position où déplacer la pièce
      */
     public void movePiece(Piece piece, Index index) {
-        if(piece.isAValidMove(index)){
-            Piece pieceWhereMove = getPieceAtIndex(index);
+        Piece pieceWhereMove = getPieceAtIndex(index);
 
-            if(pieceWhereMove!=null){
-                if(pieceWhereMove instanceof King){
-                    isGameOver = true;
-                    gamePanel.getChessListener().setEnable(false);
-                    gamePanel.getMenuListener().setEnable(true);
-                }
+        if(pieceWhereMove!=null){
+            if(pieceWhereMove instanceof King){
+                isGameOver = true;
+                gamePanel.getChessListener().setEnable(false);
+                gamePanel.getMenuListener().setEnable(true);
             }
-
-            removePiece(piece);
-
-            piece.setCurrentIndex(index);
-
-            addPiece(piece);
-
-            gamePanel.repaint();
-
-            piece.onMovement();
-
-            delayNextTurn();
         }
+
+        removePiece(piece);
+
+        piece.setCurrentIndex(index);
+
+        addPiece(piece);
+
+        gamePanel.repaint();
+
+        piece.onMovement();
 
         selectedPiece = null;
     }
@@ -257,6 +297,10 @@ public class ChessBoard {
      */
     public Piece getSelectedPiece() {
         return selectedPiece;
+    }
+
+    public int getFirstLineForColor(int color) {
+        return (color == Piece.WHITE) ? 7 : 0;
     }
 
     /**
