@@ -3,9 +3,11 @@ package Logic;
 import GUI.GamePanel;
 import GUI.MainWindow;
 
-import java.awt.event.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 
-public class ChessInputListener implements MouseListener, MouseMotionListener{
+public class ChessInputListener implements MouseListener, MouseMotionListener {
     private final MainWindow MAIN_WINDOW;
 
     private final GamePanel CHESS_PANEL;
@@ -14,7 +16,7 @@ public class ChessInputListener implements MouseListener, MouseMotionListener{
 
     private boolean isEnable = true;
 
-    public ChessInputListener(){
+    public ChessInputListener() {
         this.MAIN_WINDOW = MainWindow.getMainWindowClass();
 
         this.CHESS_PANEL = GamePanel.getGamePanelClass();
@@ -28,7 +30,7 @@ public class ChessInputListener implements MouseListener, MouseMotionListener{
 
     @Override
     public void mousePressed(MouseEvent e) {
-        if(isEnable){
+        if (isEnable) {
             CHESS_BOARD.handleClick(CHESS_PANEL.getBoardIndex(e.getX(), e.getY()), true);
             CHESS_PANEL.repaint();
         }
@@ -37,7 +39,7 @@ public class ChessInputListener implements MouseListener, MouseMotionListener{
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        if(isEnable) {
+        if (isEnable) {
             CHESS_PANEL.resetDragPosition();
             CHESS_BOARD.handleClick(CHESS_PANEL.getBoardIndex(e.getX(), e.getY()), false);
             CHESS_PANEL.repaint();
@@ -46,7 +48,7 @@ public class ChessInputListener implements MouseListener, MouseMotionListener{
 
     @Override
     public void mouseDragged(MouseEvent e) {
-        if(isEnable) {
+        if (isEnable) {
             CHESS_PANEL.setDragPosition(new Position(e.getX(), e.getY()));
             CHESS_PANEL.repaint();
         }

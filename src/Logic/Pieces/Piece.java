@@ -37,6 +37,7 @@ public abstract class Piece {
 
     /**
      * Renvoie vrai si la pièce peut se déplacée à l'index fourni
+     *
      * @param moveIndex
      * @return
      */
@@ -46,6 +47,7 @@ public abstract class Piece {
 
     /**
      * Renvoie la couleur de la pièce
+     *
      * @return
      */
     public int getPieceTeam() {
@@ -54,6 +56,7 @@ public abstract class Piece {
 
     /**
      * Renvoie l'index de la pièce
+     *
      * @return
      */
     public Index getCurrentIndex() {
@@ -62,6 +65,7 @@ public abstract class Piece {
 
     /**
      * Défini l'index de la pièce
+     *
      * @param currentIndex
      */
     public void setCurrentIndex(Index currentIndex) {
@@ -75,11 +79,11 @@ public abstract class Piece {
     /**
      * Charge le sprite de la pièce
      */
-    private void loadSprite(){
+    private void loadSprite() {
         String colorString = (pieceTeam == BLACK) ? "black" : "white";
 
         try {
-            this.sprite = ImageIO.read(this.getClass().getClassLoader().getResourceAsStream("Sprites/"+colorString +"_"+ getPieceName() + ".png"));
+            this.sprite = ImageIO.read(this.getClass().getClassLoader().getResourceAsStream("Sprites/" + colorString + "_" + getPieceName() + ".png"));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -87,6 +91,7 @@ public abstract class Piece {
 
     /**
      * Renvoie le sprite de la pièce
+     *
      * @return
      */
     public BufferedImage getSprite() {
@@ -95,12 +100,14 @@ public abstract class Piece {
 
     /**
      * Méthode à override sur les différentes variantes de pièce permettant de savoir où charger le sprite de la pièce
+     *
      * @return
      */
     abstract protected String getPieceName();
 
     /**
      * Renvoie la liste des mouvements possibles par la pièce
+     *
      * @return
      */
     public ArrayList<Index> getAvailableMoves() {

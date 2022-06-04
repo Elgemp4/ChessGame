@@ -22,14 +22,15 @@ public class Menu {
         gamePanel = GamePanel.getGamePanelClass();
         chessBoard = ChessBoard.getChessBoardClass();
 
-        restartButton = new MenuButton("Redémarrer", 0,0,50,40, chessBoard::restartGame);
-        quitButton = new MenuButton("Quitter", 0,0,50,40, this::exitGame);
+        restartButton = new MenuButton("Redémarrer", 0, 0, 50, 40, chessBoard::restartGame);
+        quitButton = new MenuButton("Quitter", 0, 0, 50, 40, this::exitGame);
 
         actualizeMenuDisposition();
     }
 
     /**
      * Dessiner le menu de victoire
+     *
      * @param graphics2D
      */
     public void drawMenu(Graphics2D graphics2D) {
@@ -42,12 +43,13 @@ public class Menu {
 
     //Dessiner l'arrière-plan transparent au-dessus du jeu
     private void drawBackground(Graphics2D graphics2D) {
-        graphics2D.setColor(new Color(150,150,105, 200));
+        graphics2D.setColor(new Color(150, 150, 105, 200));
         graphics2D.fillRect(0, 0, gamePanel.getWidth(), gamePanel.getHeight());
     }
 
     /**
      * Dessine le texte de la victoire et le centre
+     *
      * @param graphics2D
      */
     private void drawVictoryText(Graphics2D graphics2D) {
@@ -59,7 +61,7 @@ public class Menu {
         graphics2D.setFont(new Font("Arial", Font.PLAIN, textFontSize));
         Rectangle2D titleBound = graphics2D.getFontMetrics(graphics2D.getFont()).getStringBounds(victoryString, graphics2D);
 
-        int textX = gamePanel.getXOffset() + (int) (gamePanel.getChessBoardSize() - titleBound.getWidth())/2;
+        int textX = gamePanel.getXOffset() + (int) (gamePanel.getChessBoardSize() - titleBound.getWidth()) / 2;
         int textY = gamePanel.getYOffset() + gamePanel.getChessBoardSize() * 1 / 3;
 
         graphics2D.drawString(victoryString, textX, textY);
@@ -67,6 +69,7 @@ public class Menu {
 
     /**
      * Dessines le bouton quitter et le bouton rejouer
+     *
      * @param graphics2D
      */
     private void drawButtons(Graphics2D graphics2D) {
@@ -76,6 +79,7 @@ public class Menu {
 
     /**
      * Vérifie si le click effectué active un des boutons
+     *
      * @param x
      * @param y
      */
@@ -86,6 +90,7 @@ public class Menu {
 
     /**
      * Vérifie si la souris passe au-dessus d'un des boutons
+     *
      * @param x
      * @param y
      */

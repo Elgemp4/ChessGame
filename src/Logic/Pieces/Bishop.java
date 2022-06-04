@@ -2,7 +2,7 @@ package Logic.Pieces;
 
 import Logic.Index;
 
-public class Bishop extends Piece{
+public class Bishop extends Piece {
     public Bishop(int color, Index index) {
         super(color, index);
     }
@@ -16,16 +16,16 @@ public class Bishop extends Piece{
     public void computeAvailableMoves() {
         availableMoves.clear();
 
-        for (int xDirection = -1; xDirection < 2; xDirection+=2) {
-            for (int yDirection = -1; yDirection < 2; yDirection+=2) {
+        for (int xDirection = -1; xDirection < 2; xDirection += 2) {
+            for (int yDirection = -1; yDirection < 2; yDirection += 2) {
 
                 Index checkIndex = currentIndex;
-                while(true){
+                while (true) {
                     checkIndex = new Index(checkIndex.getX() + xDirection, checkIndex.getY() + yDirection);
-                    if(!chessBoard.isInGrid(checkIndex) ){
+                    if (!chessBoard.isInGrid(checkIndex)) {
                         break;
                     }
-                    if(chessBoard.getPieceAtIndex(checkIndex) != null) {
+                    if (chessBoard.getPieceAtIndex(checkIndex) != null) {
                         availableMoves.add(checkIndex);
                         break;
                     }

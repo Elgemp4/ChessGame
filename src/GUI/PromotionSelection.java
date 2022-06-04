@@ -29,7 +29,7 @@ public class PromotionSelection extends JDialog {
 
         this.avaiblesPiece = new String[]{"bishop", "knight", "rook", "queen"};
 
-        this.setLayout(new GridLayout(2,1));
+        this.setLayout(new GridLayout(2, 1));
         this.setModalityType(ModalityType.APPLICATION_MODAL);
 
         this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -48,14 +48,14 @@ public class PromotionSelection extends JDialog {
     private void initiateButtonPanel() {
         selectionButtons = new JButton[4];
         buttonPanel = new JPanel();
-        buttonPanel.setLayout(new GridLayout(1,4));
+        buttonPanel.setLayout(new GridLayout(1, 4));
 
         for (int i = 0; i < 4; i++) {
             selectionButtons[i] = new JButton();
             selectionButtons[i].setFocusPainted(false);
 
             final int finalI = i; //On ne peut pas directement passer le i dans un fonction lambda
-            selectionButtons[i].addActionListener( (event) -> {setChoosenPromotion(event, finalI);});
+            selectionButtons[i].addActionListener((event) -> setChoosenPromotion(event, finalI));
             buttonPanel.add(selectionButtons[i]);
         }
 
@@ -65,9 +65,10 @@ public class PromotionSelection extends JDialog {
 
     /**
      * Affiche le dialogue qui permet de choisir la pièce à promouvoir
+     *
      * @param promotedPiece La pièce devant être promue
      */
-    public void showSelectionDialog(Piece promotedPiece){
+    public void showSelectionDialog(Piece promotedPiece) {
         this.pieceToPromote = promotedPiece;
         this.pieceColor = this.pieceToPromote.getPieceTeam() == Piece.WHITE ? "white" : "black";
 
@@ -95,12 +96,12 @@ public class PromotionSelection extends JDialog {
      */
     private void actualizeDisplay() {
         try {
-            for(int i = 0 ; i < 4; i++) {
+            for (int i = 0; i < 4; i++) {
                 selectionButtons[i].setBackground(pieceToPromote.getPieceTeam() == Piece.WHITE ? Color.DARK_GRAY : Color.WHITE);
-                selectionButtons[i].setIcon(new ImageIcon(ImageIO.read(this.getClass().getClassLoader().getResourceAsStream("Sprites/"+this.pieceColor +"_" + avaiblesPiece[i] + ".png"))
-                                                                        .getScaledInstance(50,50, Image.SCALE_SMOOTH)));
+                selectionButtons[i].setIcon(new ImageIcon(ImageIO.read(this.getClass().getClassLoader().getResourceAsStream("Sprites/" + this.pieceColor + "_" + avaiblesPiece[i] + ".png"))
+                        .getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -113,8 +114,9 @@ public class PromotionSelection extends JDialog {
 
     /**
      * Défini la promotion de la pièce
+     *
      * @param actionEvent paramètre indispensable avec le listener mais pas utile dans ce cas-ci.
-     * @param i Index de la pièce choisie
+     * @param i           Index de la pièce choisie
      */
     private void setChoosenPromotion(ActionEvent actionEvent, int i) {
         this.choosenPiece = piecesToSelect[i];

@@ -24,9 +24,9 @@ public class King extends Piece {
 
         for (int x = -1; x < 2; x++) {
             for (int y = -1; y < 2; y++) {
-                if(!(x == 0 && y == 0)){
+                if (!(x == 0 && y == 0)) {
                     Index surroundingIndex = new Index(currentIndex.getX() + x, currentIndex.getY() + y);
-                    if(chessBoard.isInGrid(surroundingIndex)){
+                    if (chessBoard.isInGrid(surroundingIndex)) {
                         availableMoves.add(surroundingIndex);
                     }
                 }
@@ -42,18 +42,18 @@ public class King extends Piece {
     private void computeCastling() {
         castlingMoves.clear();
 
-        if(!this.hasMoved){ //Si ce pion n'a jamais bougé
-            for (int extremity = 0; extremity < 8; extremity+=7) { //Boucler à chaque extrémité
+        if (!this.hasMoved) { //Si ce pion n'a jamais bougé
+            for (int extremity = 0; extremity < 8; extremity += 7) { //Boucler à chaque extrémité
                 Index searchIndex = new Index(extremity, chessBoard.getFirstLineForColor(pieceTeam));
                 Piece possibleRook = chessBoard.getPieceAtIndex(searchIndex);
 
-                if(possibleRook == null) {
+                if (possibleRook == null) {
                     return;
                 }
 
-                if(!possibleRook.hasMoved) { //Si la pièce à l'extrémité n'a jamais bougée on sait que c'est une tour
+                if (!possibleRook.hasMoved) { //Si la pièce à l'extrémité n'a jamais bougée on sait que c'est une tour
                     Rook rook = (Rook) possibleRook;
-                    if(isSpaceBetweenEmpty(rook.getCurrentIndex().getX(), this.getCurrentIndex().getX(), searchIndex.getY())){
+                    if (isSpaceBetweenEmpty(rook.getCurrentIndex().getX(), this.getCurrentIndex().getX(), searchIndex.getY())) {
                         int xOffset = this.getCurrentIndex().getX() > rook.getCurrentIndex().getX() ? -2 : 2;
 
                         castlingMoves.add(new Index(currentIndex.getX() + xOffset, currentIndex.getY()));
@@ -68,11 +68,11 @@ public class King extends Piece {
         int maxX = Math.max(firstX, secondX);
 
         for (int checkForEmptyX = minX + 1; checkForEmptyX < maxX; checkForEmptyX++) { //Et qu'il n'y pas de pièce entre la tour et le roi
-            if(!chessBoard.isEmpty(chessBoard.getPieceAtIndex(new Index(checkForEmptyX, ySearch)))){
+            if (!chessBoard.isEmpty(chessBoard.getPieceAtIndex(new Index(checkForEmptyX, ySearch)))) {
                 return false;
             }
         }
-        return  true;
+        return true;
     }
 
 //    private boolean isSpaceBetweenAttack

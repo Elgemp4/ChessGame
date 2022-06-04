@@ -49,8 +49,8 @@ public class MenuButton {
         graphics2D.setFont(new Font("Arial", Font.PLAIN, textFontSize));
 
         Rectangle2D titleBound = graphics2D.getFontMetrics(graphics2D.getFont()).getStringBounds(title, graphics2D);
-        int textX = (int) (width - titleBound.getWidth())/2;
-        int textY = (int) (height + titleBound.getHeight() /2 )/2;
+        int textX = (int) (width - titleBound.getWidth()) / 2;
+        int textY = (int) (height + titleBound.getHeight() / 2) / 2;
 
         graphics2D.drawString(title, textX, textY);
 
@@ -59,29 +59,30 @@ public class MenuButton {
 
     /**
      * Execute le code du bouton si le bouton est bien cliqué
+     *
      * @param x
      * @param y
      */
-    public void executeIfInHitbox(int x, int y){
-        if(x >= this.x && x <= this.x + this.width && y >= this.y && y <= this.y + this.height){
+    public void executeIfInHitbox(int x, int y) {
+        if (x >= this.x && x <= this.x + this.width && y >= this.y && y <= this.y + this.height) {
             actionWhenClicked.run();
         }
     }
 
     /**
      * Surligne le bouton si jamais la souris passe au-dessus du bouton
+     *
      * @param x
      * @param y
      */
     public void highlightButtonIfHover(int x, int y) {
-        if(x >= this.x && x <= this.x + this.width && y >= this.y && y <= this.y + this.height){
-            if(buttonColor == Color.DARK_GRAY){
+        if (x >= this.x && x <= this.x + this.width && y >= this.y && y <= this.y + this.height) {
+            if (buttonColor == Color.DARK_GRAY) {
                 buttonColor = Color.GRAY;
                 gamePanel.repaint();
             }
-        }
-        else{
-            if(buttonColor == Color.GRAY){
+        } else {
+            if (buttonColor == Color.GRAY) {
                 buttonColor = Color.DARK_GRAY;
                 gamePanel.repaint();
             }
@@ -90,6 +91,7 @@ public class MenuButton {
 
     /**
      * Renvoie l'image du bouton
+     *
      * @return
      */
     public BufferedImage getButtonImage() {
@@ -98,6 +100,7 @@ public class MenuButton {
 
     /**
      * Défini la position du bouton
+     *
      * @param x
      * @param y
      */
@@ -109,10 +112,11 @@ public class MenuButton {
 
     /**
      * Défini la taille du bouton
+     *
      * @param width
      * @param height
      */
-    public void setDimension(int width, int height){
+    public void setDimension(int width, int height) {
         this.width = width;
         this.height = height;
         recreateButtonImage();

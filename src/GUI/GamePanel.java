@@ -73,7 +73,7 @@ public class GamePanel extends JPanel {
 
         moveSelected(graphics2D);
 
-        if(CHESS_BOARD.isGameOver()){
+        if (CHESS_BOARD.isGameOver()) {
             MENU.drawMenu(graphics2D);
         }
 
@@ -97,11 +97,12 @@ public class GamePanel extends JPanel {
 
     /**
      * Bouge le point à la position du curseur pour donner l'effet de tenir le pion
+     *
      * @param g
      */
     private void moveSelected(Graphics2D g) {
-        if(dragPosition != null){
-            if(getChessBoard().isInSelectionMode()){
+        if (dragPosition != null) {
+            if (getChessBoard().isInSelectionMode()) {
                 drawCase(getChessBoard().getSelectedPiece().getCurrentIndex(), new Color(246, 246, 104), g);
                 drawPiece(g, getChessBoard().getSelectedPiece(), dragPosition);
             }
@@ -111,6 +112,7 @@ public class GamePanel extends JPanel {
 
     /**
      * Dessin de l'arrière plan (arrière plan présent autour du plateau)
+     *
      * @param g
      */
     private void drawBackground(Graphics2D g) {
@@ -121,9 +123,10 @@ public class GamePanel extends JPanel {
 
     /**
      * Dessine la grille du plateau
+     *
      * @param g
      */
-    private void drawGrid(Graphics2D g){
+    private void drawGrid(Graphics2D g) {
         for (int col = 0; col < 8; col++) {
             for (int row = 0; row < 8; row++) {
                 drawCase(new Index(col, row), g);
@@ -133,6 +136,7 @@ public class GamePanel extends JPanel {
 
     /**
      * Dessine une case à l'index spécifié en calculant automatiquement la couleur nécessaire à cet endroit
+     *
      * @param index Index de la case à dessiner
      * @param g
      */
@@ -142,6 +146,7 @@ public class GamePanel extends JPanel {
 
     /**
      * Desinne un case avec la couleur indiquée
+     *
      * @param index Index de la case à dessiner
      * @param color Couleur de la case
      * @param g
@@ -156,6 +161,7 @@ public class GamePanel extends JPanel {
 
     /**
      * Dessine l'ensemble des pièces du plateau
+     *
      * @param g
      */
     private void drawAllPieces(Graphics2D g) {
@@ -163,7 +169,7 @@ public class GamePanel extends JPanel {
 
         for (int y = 0; y < 8; y++) {
             for (int x = 0; x < 8; x++) {
-                if(chessBoardArray[y][x] != null){
+                if (chessBoardArray[y][x] != null) {
                     drawPiece(g, chessBoardArray[y][x]);
                 }
             }
@@ -172,11 +178,12 @@ public class GamePanel extends JPanel {
 
     /**
      * Dessine la pièce fournie
+     *
      * @param g
      * @param piece La pièce à dessiner
      */
     private void drawPiece(Graphics2D g, Piece piece) {
-        if(piece == null) {
+        if (piece == null) {
             return;
         }
 
@@ -187,12 +194,13 @@ public class GamePanel extends JPanel {
 
     /**
      * Dessine la pièce au coordonées spécifiées
+     *
      * @param g
-     * @param piece La pièce à dessiner
+     * @param piece    La pièce à dessiner
      * @param position La position où dessiner la pièce
      */
     private void drawPiece(Graphics2D g, Piece piece, Position position) {
-        if(piece == null) {
+        if (piece == null) {
             return;
         }
 
@@ -202,12 +210,13 @@ public class GamePanel extends JPanel {
     /**
      * Dessine les différents mouvements possibles et les différentes attaques sur les pions ennemis
      * ainsi que colorie en jaune la case du pion sélectionné
+     *
      * @param g
      */
     private void drawSelectedPieceAndMoves(Graphics2D g) {
         Piece selectedPiece = CHESS_BOARD.getSelectedPiece();
 
-        if(selectedPiece==null){
+        if (selectedPiece == null) {
             return;
         }
 
@@ -217,18 +226,17 @@ public class GamePanel extends JPanel {
         drawPiece(g, selectedPiece);
 
         for (Index index : possibleMoves) {
-            if(CHESS_BOARD.isEmpty(CHESS_BOARD.getChessBoardArray()[index.getY()][index.getX()])) {
+            if (CHESS_BOARD.isEmpty(CHESS_BOARD.getChessBoardArray()[index.getY()][index.getX()])) {
                 drawPossibleMove(index, g);
-            }
-            else{
-                if(selectedPiece.getPieceTeam() != CHESS_BOARD.getPieceAtIndex(index).getPieceTeam()){
+            } else {
+                if (selectedPiece.getPieceTeam() != CHESS_BOARD.getPieceAtIndex(index).getPieceTeam()) {
                     drawPieceAttackCircle(index, g);
                 }
 
             }
         }
 
-        if(selectedPiece instanceof King) {
+        if (selectedPiece instanceof King) {
             King king = (King) selectedPiece;
 
             for (Index possibleCastling : king.getCastlingMoves()) {
@@ -239,19 +247,21 @@ public class GamePanel extends JPanel {
 
     /**
      * Dessine un cercle remplis indiquant une case sur laquelle la pièce peut se déplacer
+     *
      * @param index
      * @param g
      */
     private void drawPossibleMove(Index index, Graphics2D g) {
-        g.setColor(new Color(10,10,10,50));
+        g.setColor(new Color(10, 10, 10, 50));
 
         Position drawPosition = getScreenPosition(index.getX(), index.getY(), caseSize / 3);
 
-        g.fillOval(drawPosition.getX(), drawPosition.getY(), caseSize /3, caseSize /3);
+        g.fillOval(drawPosition.getX(), drawPosition.getY(), caseSize / 3, caseSize / 3);
     }
 
     /**
      * Dessine les contours d'un cercle pour indiquer une pièce pouvant être attaquée
+     *
      * @param index
      * @param g
      */
@@ -261,7 +271,7 @@ public class GamePanel extends JPanel {
         int diameter = caseSize * 14 / 16;
         int lineThickness = caseSize * 2 / 16;
 
-        g.setColor(new Color(10,10,10,50));
+        g.setColor(new Color(10, 10, 10, 50));
 
         g.setStroke(new BasicStroke(lineThickness));
 
@@ -277,6 +287,7 @@ public class GamePanel extends JPanel {
 
     /**
      * Défini la position où le pion est tenu
+     *
      * @param dragPosition Nouvelle position
      */
     public void setDragPosition(Position dragPosition) {
@@ -286,6 +297,7 @@ public class GamePanel extends JPanel {
     /**
      * Permet d'obtenir l'index où le joueur a cliqué en fonction du tour (lors du tour des noirs, le plateau est
      * inversé
+     *
      * @param x
      * @param y
      * @return
@@ -294,7 +306,7 @@ public class GamePanel extends JPanel {
         int xIndex = (x - xOffset) / caseSize;
         int yIndex = (y - yOffset) / caseSize;
 
-        if(CHESS_BOARD.getWhomTurn() == Piece.BLACK) {
+        if (CHESS_BOARD.getWhomTurn() == Piece.BLACK) {
             yIndex = 7 - yIndex;
             xIndex = 7 - xIndex;
         }
@@ -304,6 +316,7 @@ public class GamePanel extends JPanel {
 
     /**
      * Permet d'obtenir la position d'un index en fonction du tour
+     *
      * @param x
      * @param y
      * @return
@@ -314,6 +327,7 @@ public class GamePanel extends JPanel {
 
     /**
      * Permet d'obtenir la position d'un index en fonction du tour et d'y ajouter un décallage
+     *
      * @param x
      * @param y
      * @return
@@ -322,14 +336,13 @@ public class GamePanel extends JPanel {
         int posX;
         int posY;
 
-        if(CHESS_BOARD.getWhomTurn() == Piece.BLACK) {
+        if (CHESS_BOARD.getWhomTurn() == Piece.BLACK) {
             posX = (x * caseSize + xOffset) - offset;
             posY = (y * caseSize + yOffset) - offset;
 
             posY = getHeight() - caseSize - posY;
             posX = getWidth() - caseSize - posX;
-        }
-        else{
+        } else {
             posX = (x * caseSize + xOffset) + offset;
             posY = (y * caseSize + yOffset) + offset;
         }

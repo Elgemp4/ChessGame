@@ -7,7 +7,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
-public class MenuInputListener implements MouseListener, MouseMotionListener{
+public class MenuInputListener implements MouseListener, MouseMotionListener {
     private ChessBoard chessBoard;
     private Menu menu;
 
@@ -24,7 +24,7 @@ public class MenuInputListener implements MouseListener, MouseMotionListener{
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        if(isEnable){
+        if (isEnable) {
             menu.checkClick(e.getX(), e.getY());
         }
 
@@ -32,7 +32,7 @@ public class MenuInputListener implements MouseListener, MouseMotionListener{
 
     @Override
     public void mouseMoved(MouseEvent e) {
-        if(isEnable){
+        if (isEnable) {
             menu.checkHover(e.getX(), e.getY());
         }
     }
