@@ -11,7 +11,7 @@ public class MainWindow extends JFrame {
     private final GamePanel CHESS_BOARD;
 
     public MainWindow() {
-        super("Chess");
+        super("Jeu d'échec");
 
         mainWindowClass = this;
 
